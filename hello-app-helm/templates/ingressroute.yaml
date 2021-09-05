@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`remote.k4mrul.tech`)
+      kind: Rule
+      middlewares:
+        - name: headers-default@file
+      services:
+        - name: {{ .Chart.Name }}
+          port: 80
