@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+data:
+  dns-token: Z3pwZ19SX0V6b3J2b3RfOEp0d0VGOENTVnBvX2lRdWp2VjRyRE1nUg==
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: cloudflare
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+  namespace: default
+data:
+  traefik-config.yaml: |
+    http:
+      middlewares:
+        headers-default:
+          headers:
+            sslRedirect: true
+            browserXssFilter: true
+            contentTypeNosniff: true
+            forceSTSHeader: true
+            stsIncludeSubdomains: true
+            stsPreload: true
+            stsSeconds: 15552000
+            customFrameOptionsValue: SAMEORIGIN
